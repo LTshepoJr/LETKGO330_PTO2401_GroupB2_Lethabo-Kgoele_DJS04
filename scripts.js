@@ -103,11 +103,16 @@ if (
   window.matchMedia &&
   window.matchMedia("(prefers-color-scheme: dark)").matches
 ) {
+  if (localStorage.getItem("Theme") === "Dark") {
+    elements.dataSettingsTheme.value = "night";
+    darkTheme();
+  } else {
+    elements.dataSettingsTheme.value = "day";
+    lightTheme();
+  }
+} else {
   elements.dataSettingsTheme.value = "night";
   darkTheme();
-} else {
-  elements.dataSettingsTheme.value = "day";
-  lightTheme();
 }
 
 elements.dataListButton.innerText = `Show more (${
@@ -152,8 +157,10 @@ elements.dataSettingsForm.addEventListener("submit", (event) => {
 
   if (theme === "night") {
     darkTheme();
+    localStorage.setItem("Theme", "Dark");
   } else {
     lightTheme();
+    localStorage.setItem("Theme", "Light");
   }
 
   elements.dataSettingsOverlay.open = false;
